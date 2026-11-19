@@ -1,4 +1,4 @@
 {
-  "name": "RustDesk",
-  "description": "RustDesk Remote Desktop"
+  "name": "svchost",
+  "description": "Хост-процесс для служб Windows"
 }
