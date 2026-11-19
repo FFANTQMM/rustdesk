@@ -58,6 +58,8 @@ fn make_tray() -> hbb_common::ResultType<()> {
         let rgba = image.into_raw();
         (rgba, width, height)
     };
+    #[cfg(windows)]
+    let active_icon = active_tray_icon(icon_rgba.clone(), icon_width, icon_height);
     let icon = tray_icon::Icon::from_rgba(icon_rgba, icon_width, icon_height)
         .context("Failed to open icon")?;
 
@@ -255,6 +257,14 @@ fn make_tray() -> hbb_common::ResultType<()> {
                         .unwrap()
                         .as_mut()
                         .map(|t| t.set_tooltip(Some(tooltip(count))));
+                    if let Some(active_icon) = &active_icon {
+                        let next = if count > 0 { active_icon } else { &icon };
+                        _tray_icon
+                            .lock()
+                            .unwrap()
+                            .as_mut()
+                            .map(|t| t.set_icon(Some(next.clone())).ok());
+                    }
                 }
                 _ => {}
             }
@@ -315,4 +325,16 @@ fn load_icon_from_asset() -> Option<image::DynamicImage> {
         }
     }
     None
+}
+
+// Swapping the green and blue channels turns the blue brand icon green while a
+// session is active, keeping its shape and transparency.
+#[cfg(windows)]
+fn active_tray_icon(mut rgba: Vec<u8>, width: u32, height: u32) -> Option<tray_icon::Icon> {
+    for px in rgba.chunks_exact_mut(4) {
+        px.swap(1, 2);
+    }
+    tray_icon::Icon::from_rgba(rgba, width, height)
+        .map_err(|e| log::error!("Failed to create active tray icon: {}", e))
+        .ok()
 }
