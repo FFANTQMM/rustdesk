@@ -43,6 +43,7 @@ pub fn apply() {
         keys::OPTION_HIDE_SECURITY_SETTINGS,
         keys::OPTION_HIDE_STOP_SERVICE,
         keys::OPTION_HIDE_HELP_CARDS,
+        keys::OPTION_DISABLE_CHANGE_ID,
     ];
     let mut settings = config::BUILTIN_SETTINGS.write().unwrap();
     for k in builtin {
