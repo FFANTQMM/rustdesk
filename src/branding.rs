@@ -1,6 +1,10 @@
 use base::config::keys;
 use hbb_common::config;
 
+// Written by branding/apply_branding.py from branding/branding.json at build time.
+// Also names the service, the install folder and the exe, so keep it to letters, digits, '-' and '_'.
+const APP_NAME: &str = "RustDesk";
+
 const SERVER: &str = "194.32.230.200";
 const KEY: &str = "S8ma9SvLwUzl2SQoeXrjpkHD47jt0vanrF3igOZJfmQ=";
 
@@ -16,6 +20,10 @@ const OPTION_ALLOW_HIDE_CM: &str = "allow-hide-cm";
 // Overwrite settings win over the user's config and lock the matching UI controls,
 // so employees cannot point the client elsewhere or bring back the connection window.
 pub fn apply() {
+    if APP_NAME != "RustDesk" {
+        *config::APP_NAME.write().unwrap() = APP_NAME.to_owned();
+    }
+
     let overwrite = [
         (keys::OPTION_CUSTOM_RENDEZVOUS_SERVER, SERVER),
         (keys::OPTION_RELAY_SERVER, SERVER),
