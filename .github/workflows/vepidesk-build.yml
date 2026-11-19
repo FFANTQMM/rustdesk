@@ -1,7 +1,15 @@
-name: Build vepidesk (Windows + Android)
+name: Build vepidesk
 
 on:
   workflow_dispatch:
+    inputs:
+      targets:
+        description: "What to build"
+        type: choice
+        default: windows-x64
+        options:
+          - windows-x64
+          - windows+android
 
 jobs:
   build:
@@ -11,3 +19,4 @@ jobs:
       upload-artifact: true
       upload-tag: "vepidesk"
       only-windows-android: true
+      only-windows-x64: ${{ inputs.targets == 'windows-x64' }}
