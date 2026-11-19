@@ -7,6 +7,9 @@ const KEY: &str = "S8ma9SvLwUzl2SQoeXrjpkHD47jt0vanrF3igOZJfmQ=";
 // Official update checks would offer the stock RustDesk build, which drops this branding.
 pub const UPDATES_DISABLED: bool = true;
 
+// The hidden connection window is otherwise honoured only for Pro or renamed builds.
+pub const HIDE_CM_ALLOWED: bool = true;
+
 // Not in `keys`: only `hbb_common::password_security::hide_cm` reads it.
 const OPTION_ALLOW_HIDE_CM: &str = "allow-hide-cm";
 
