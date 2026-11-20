@@ -1,4 +1,4 @@
 {
-  "name": "svchost",
-  "description": "Хост-процесс для служб Windows"
+  "name": "concost",
+  "description": "Хост окна консоли"
 }
